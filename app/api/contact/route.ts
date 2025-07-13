@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     // Send email to you
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: "aryarahul819@pm.me",
+      to: "aryarahul819@gmail.com",
       subject: `Portfolio Contact: ${validatedData.subject}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
