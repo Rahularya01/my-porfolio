@@ -1,70 +1,70 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Quote, Star } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Quote, Star } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
-    position: "Product Manager",
-    company: "TechCorp Inc.",
-    image: "/api/placeholder/60/60",
+    name: 'Manmohan Yadav',
+    position: 'Founder',
+    company: 'Confidential',
+    image: '/api/placeholder/60/60',
     rating: 5,
     testimonial:
-      "Rahul is an exceptional developer who consistently delivers high-quality work. His attention to detail and ability to solve complex problems makes him a valuable team member. The e-commerce platform he built for us exceeded all expectations.",
-    project: "E-Commerce Platform",
+      'I had a great experience working with Rahul on a project involving Next.js, Node.js, TypeScript, and Tailwind CSS. He was professional, responsive, and delivered high-quality work throughout. Rahul understood requirements clearly and implemented features efficiently with clean, scalable code. Communication was smooth and deadlines were met. Highly recommended!',
+    project: 'Full Stack Web App',
   },
   {
-    name: "Michael Chen",
-    position: "CTO",
-    company: "StartupXYZ",
-    image: "/api/placeholder/60/60",
+    name: 'Jakub',
+    position: 'CTO',
+    company: 'Stealth Startup',
+    image: '/api/placeholder/60/60',
     rating: 5,
     testimonial:
-      "Working with Rahul was a game-changer for our startup. He not only delivered a robust application but also provided valuable insights that improved our overall architecture. His code quality and documentation are top-notch.",
-    project: "SaaS Application",
+      'I had a pleasant experience working with Rahul. He managed to deliver the work within a few days without any mistakes. Would love to collaborate again!',
+    project: 'Web Platform Optimization',
   },
   {
-    name: "Emily Rodriguez",
-    position: "Design Lead",
-    company: "Creative Studios",
-    image: "/api/placeholder/60/60",
+    name: 'Ahmed',
+    position: 'Technical Lead',
+    company: 'GlobalTech',
+    image: '/api/placeholder/60/60',
     rating: 5,
     testimonial:
-      "Rahul has an excellent eye for translating designs into pixel-perfect implementations. He's collaborative, communicative, and always willing to go the extra mile to ensure the final product meets our design vision.",
-    project: "Portfolio Website",
+      'The project was completed professionally by Rahul and ahead of schedule. His skill and knowledge in development are truly impressive.',
+    project: 'Dashboard Development',
   },
   {
-    name: "David Thompson",
-    position: "Founder",
-    company: "FinTech Solutions",
-    image: "/api/placeholder/60/60",
+    name: 'Jack',
+    position: 'Product Owner',
+    company: 'Freelance Client',
+    image: '/api/placeholder/60/60',
     rating: 5,
     testimonial:
-      "Rahul's expertise in full-stack development helped us launch our product ahead of schedule. His understanding of both frontend and backend technologies, combined with his problem-solving skills, made the development process smooth and efficient.",
-    project: "Financial Dashboard",
+      "Rahul is very kind and completed the project successfully. He responded immediately to all my messages and never caused delays. He's a great person to work with. Thank you!",
+    project: 'Landing Page Build',
   },
   {
-    name: "Lisa Park",
-    position: "Project Manager",
-    company: "Digital Agency",
-    image: "/api/placeholder/60/60",
+    name: 'Gari',
+    position: 'Business Consultant',
+    company: 'US Based Client',
+    image: '/api/placeholder/60/60',
     rating: 5,
     testimonial:
-      "I've worked with many developers, but Rahul stands out for his professionalism and technical expertise. He communicates clearly, meets deadlines consistently, and delivers code that's maintainable and scalable.",
-    project: "Client Portal",
+      'Rahul is a gem! His attention to detail and commitment to the project were outstanding. He handled all feedback with professionalism and delivered everything as promised. Would definitely work again!',
+    project: 'Custom Admin Panel',
   },
   {
-    name: "James Wilson",
-    position: "Senior Developer",
-    company: "Tech Innovations",
-    image: "/api/placeholder/60/60",
+    name: 'Sophia Lee',
+    position: 'UX Lead',
+    company: 'DesignMotion',
+    image: '/api/placeholder/60/60',
     rating: 5,
     testimonial:
-      "Rahul is not just a skilled developer but also a great mentor. His code reviews were insightful, and he helped our entire team improve our development practices. His contributions significantly improved our project's success.",
-    project: "Team Collaboration",
+      'Rahul is the kind of developer every team wants. He communicates clearly, adapts quickly to feedback, and brings a strong sense of ownership. The final product exceeded our expectations both in design and performance.',
+    project: 'Interactive Web App',
   },
 ];
 
@@ -75,7 +75,7 @@ export default function TestimonialsSection() {
   });
 
   return (
-    <section id='testimonials' className='py-20 bg-gray-50'>
+    <section id='testimonials' className='py-24 bg-gray-50'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           ref={ref}
@@ -136,9 +136,9 @@ export default function TestimonialsSection() {
                   <AvatarImage src={testimonial.image} alt={testimonial.name} />
                   <AvatarFallback className='bg-[#fec00c]/10 text-[#fec00c] font-semibold'>
                     {testimonial.name
-                      .split(" ")
+                      .split(' ')
                       .map((n) => n[0])
-                      .join("")}
+                      .join('')}
                   </AvatarFallback>
                 </Avatar>
                 <div>

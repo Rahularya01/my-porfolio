@@ -1,48 +1,70 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Building2, Calendar, MapPin } from "lucide-react";
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Building2, Calendar, MapPin } from 'lucide-react';
 
 const experiences = [
   {
-    company: "Tech Innovations Inc.",
-    position: "Senior Full Stack Developer",
-    period: "2022 - Present",
-    location: "Remote",
+    company: 'Uptechunt',
+    position: 'Full Stack Developer',
+    period: 'Feb 2023 – Present',
+    location: 'Remote',
     description: [
-      "Led development of a scalable e-commerce platform serving 100K+ users",
-      "Implemented microservices architecture using Node.js and Docker",
-      "Mentored junior developers and established coding best practices",
-      "Reduced application load time by 40% through optimization techniques",
+      'Built and scaled a freelance platform using Next.js, React, and Node.js with server-side rendering and efficient routing.',
+      'Integrated Firebase and AWS for real-time messaging, secure authentication, and cloud storage.',
+      'Designed responsive, mobile-friendly UIs using TailwindCSS with performance optimizations for Core Web Vitals.',
     ],
-    technologies: ["React", "Node.js", "PostgreSQL", "AWS", "Docker"],
+    technologies: [
+      'Next.js',
+      'React',
+      'Node.js',
+      'Firebase',
+      'AWS',
+      'TailwindCSS',
+    ],
   },
   {
-    company: "Digital Solutions LLC",
-    position: "Full Stack Developer",
-    period: "2020 - 2022",
-    location: "San Francisco, CA",
+    company: 'Cercling',
+    position: 'Senior Front-End Developer',
+    period: 'Jan 2022 – Jan 2023',
+    location: 'Remote',
     description: [
-      "Built responsive web applications for various clients across industries",
-      "Developed RESTful APIs and integrated third-party services",
-      "Collaborated with design teams to implement pixel-perfect UIs",
-      "Maintained 99.9% uptime for critical business applications",
+      'Led front-end development for a SaaS analytics dashboard using React and Next.js.',
+      'Collaborated with product managers to deliver user-centric features, boosting retention by 30%.',
+      'Improved application speed and SEO through code-splitting and advanced optimizations.',
     ],
-    technologies: ["Vue.js", "Python", "MongoDB", "Firebase", "Tailwind CSS"],
+    technologies: ['React', 'Next.js', 'TypeScript', 'TailwindCSS', 'Vercel'],
   },
   {
-    company: "StartupXYZ",
-    position: "Frontend Developer",
-    period: "2019 - 2020",
-    location: "New York, NY",
+    company: 'Freelance Projects',
+    position: 'React/React Native Developer',
+    period: 'May 2020 – Dec 2021',
+    location: 'Remote',
     description: [
-      "Developed the company's flagship SaaS product from scratch",
-      "Implemented real-time features using WebSocket connections",
-      "Optimized application performance and user experience",
-      "Worked closely with product managers to define feature requirements",
+      'Delivered 10+ responsive web and mobile apps across healthcare, e-commerce, and education sectors.',
+      'Built cross-platform mobile apps with React Native and deployed on Play Store and App Store.',
+      'Managed the entire development lifecycle including wireframing, coding, testing, and deployment.',
     ],
-    technologies: ["React", "TypeScript", "Redux", "Node.js", "Socket.io"],
+    technologies: ['React', 'React Native', 'Expo', 'Firebase', 'MongoDB'],
+  },
+  {
+    company: 'Dippers Logistics',
+    position: 'Full Stack Developer',
+    period: 'Jul 2019 – Apr 2020',
+    location: 'Gurgaon, HR',
+    description: [
+      'Developed logistic dashboards using React and Express for real-time tracking and delivery insights.',
+      'Integrated REST APIs and Google Maps for dynamic order visualization.',
+      'Collaborated with teams to convert logistics workflows into scalable interfaces and backend services.',
+    ],
+    technologies: [
+      'React',
+      'Express.js',
+      'MongoDB',
+      'REST API',
+      'Google Maps API',
+    ],
   },
 ];
 
@@ -53,7 +75,7 @@ export default function ExperienceSection() {
   });
 
   return (
-    <section id='experience' className='py-20 bg-gray-50'>
+    <section id='experience' className='py-24 bg-white'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           ref={ref}
@@ -83,7 +105,7 @@ export default function ExperienceSection() {
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 className={`relative flex items-center ${
-                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
               >
                 {/* Timeline dot */}
@@ -92,7 +114,7 @@ export default function ExperienceSection() {
                 {/* Content */}
                 <div
                   className={`ml-12 md:ml-0 md:w-1/2 ${
-                    index % 2 === 0 ? "md:pr-12" : "md:pl-12"
+                    index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'
                   }`}
                 >
                   <div className='bg-white rounded-2xl p-6 shadow-lg border border-gray-200'>

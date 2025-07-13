@@ -22,7 +22,7 @@ export default function HeroSection() {
   return (
     <section
       id='home'
-      className='min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white pt-16'
+      className='min-h-screen flex items-center justify-center bg-white pt-16'
     >
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center'>
         <motion.div
@@ -36,7 +36,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Hi, I'm <span className='text-[#fec00c]'>Rahul</span>
+            Hi, I&apos;m <span className='text-[#fec00c]'>Rahul</span>
           </motion.h1>
 
           <motion.div
@@ -47,7 +47,7 @@ export default function HeroSection() {
           >
             <span className='block mb-2'>Full Stack Developer</span>
             <span className='text-lg sm:text-xl text-gray-500'>
-              Building digital experiences that make a difference
+              Crafting fast, scalable apps with React, Next.js & Node.js
             </span>
           </motion.div>
 
@@ -57,9 +57,10 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            I create modern, scalable web applications with cutting-edge
-            technologies. From concept to deployment, I bring ideas to life with
-            clean code and intuitive design.
+            With 5+ years of experience, I specialize in building user-centric
+            web and mobile apps from the ground up—blending beautiful UI with
+            robust backend logic. Let&apos;s turn ideas into polished digital
+            products.
           </motion.p>
 
           <motion.div
@@ -92,7 +93,7 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 1.0 }}
           >
             <a
-              href='https://github.com/rahul'
+              href='https://github.com/Rahularya01'
               target='_blank'
               rel='noopener noreferrer'
               className='text-gray-600 hover:text-[#fec00c] transition-colors'
@@ -100,7 +101,7 @@ export default function HeroSection() {
               <Github size={24} />
             </a>
             <a
-              href='https://linkedin.com/in/rahul'
+              href='https://linkedin.com/in/rahul-arya-0993841b7'
               target='_blank'
               rel='noopener noreferrer'
               className='text-gray-600 hover:text-[#fec00c] transition-colors'
@@ -108,7 +109,7 @@ export default function HeroSection() {
               <Linkedin size={24} />
             </a>
             <a
-              href='mailto:rahul@example.com'
+              href='mailto:aryarahul819@gmail.com'
               className='text-gray-600 hover:text-[#fec00c] transition-colors'
             >
               <Mail size={24} />

@@ -1,33 +1,46 @@
-"use client";
+'use client';
 
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { Code, Database, Smartphone, Zap } from "lucide-react";
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Code, Database, Smartphone, Zap } from 'lucide-react';
 
 const skills = [
   {
     icon: Code,
-    title: "Frontend Development",
-    description: "React, Next.js, TypeScript, Tailwind CSS",
-    technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vue.js"],
+    title: 'Frontend Development',
+    description: 'React, Next.js, TypeScript, Tailwind CSS',
+    technologies: [
+      'React',
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Redux',
+      'Zustand',
+    ],
   },
   {
     icon: Database,
-    title: "Backend Development",
-    description: "Node.js, Python, PostgreSQL, MongoDB",
-    technologies: ["Node.js", "Python", "PostgreSQL", "MongoDB", "Express"],
+    title: 'Backend Development',
+    description: 'Node.js, Express, PostgreSQL, MongoDB',
+    technologies: [
+      'Node.js',
+      'Express.js',
+      'PostgreSQL',
+      'MongoDB',
+      'Firebase',
+    ],
   },
   {
     icon: Smartphone,
-    title: "Mobile Development",
-    description: "React Native, Flutter, Progressive Web Apps",
-    technologies: ["React Native", "Flutter", "PWA", "Expo", "Firebase"],
+    title: 'Mobile Development',
+    description: 'React Native, Expo, PWAs',
+    technologies: ['React Native', 'Expo', 'PWA', 'Flutter', 'Firebase'],
   },
   {
     icon: Zap,
-    title: "DevOps & Cloud",
-    description: "AWS, Docker, CI/CD, Kubernetes",
-    technologies: ["AWS", "Docker", "CI/CD", "Kubernetes", "Terraform"],
+    title: 'Cloud & DevOps',
+    description: 'AWS, Vercel, CI/CD, Docker',
+    technologies: ['AWS', 'Vercel', 'Docker', 'CI/CD', 'Git'],
   },
 ];
 
@@ -38,7 +51,7 @@ export default function AboutSection() {
   });
 
   return (
-    <section id='about' className='py-20 bg-white'>
+    <section id='about' className='py-24 bg-gray-50'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <motion.div
           ref={ref}
@@ -51,9 +64,11 @@ export default function AboutSection() {
             About Me
           </h2>
           <p className='text-lg text-gray-600 max-w-3xl mx-auto'>
-            I'm a passionate full-stack developer with 5+ years of experience
-            building modern web applications. I love turning complex problems
-            into simple, beautiful, and intuitive solutions.
+            I'm a passionate full-stack developer with 5+ years of hands-on
+            experience building scalable web and mobile applications using
+            React.js, Next.js, and React Native. I specialize in turning complex
+            product requirements into fast, responsive, and elegant user
+            interfaces that drive engagement and performance.
           </p>
         </motion.div>
 
@@ -68,21 +83,24 @@ export default function AboutSection() {
             </h3>
             <div className='space-y-4 text-gray-600'>
               <p>
-                Started my journey as a curious developer who loved to
-                experiment with new technologies. Over the years, I've had the
-                privilege of working with startups and established companies,
-                helping them build scalable and user-friendly applications.
+                I began my journey as a curious developer exploring modern
+                JavaScript frameworks. Over the years, I’ve delivered 50+
+                projects including freelance marketplaces, SaaS dashboards, and
+                mobile apps for industries like healthcare, logistics, and
+                e-commerce.
               </p>
               <p>
-                I believe in writing clean, maintainable code and staying
-                up-to-date with the latest industry trends. When I'm not coding,
-                you'll find me contributing to open source projects or exploring
-                new frameworks and tools.
+                I’ve led front-end development for startups, optimized
+                applications for Core Web Vitals, and shipped cross-platform
+                mobile apps to production using React Native. Collaborating with
+                agile teams and translating business needs into scalable code is
+                what drives me.
               </p>
               <p>
-                My goal is to create digital experiences that not only look
-                great but also solve real problems and make people's lives
-                easier.
+                I stay sharp by contributing to open source, keeping up with
+                frontend innovations, and refining my code for clarity and
+                performance. My mission? Build digital experiences that delight
+                users and deliver real business value.
               </p>
             </div>
           </motion.div>
