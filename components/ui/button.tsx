@@ -12,14 +12,14 @@ export function Button({
   ...props
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#fec00c] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
+    "inline-flex items-center justify-center whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:pointer-events-none disabled:opacity-50";
 
   const variants = {
     default:
-      "bg-[#fec00c] text-black hover:bg-[#e6ad0b] hover:shadow-lg hover:scale-105 active:scale-95",
+      "bg-gradient-to-r from-amber-300 to-yellow-400 text-slate-950 hover:brightness-105 hover:shadow-[0_8px_25px_rgba(250,204,21,0.25)] active:scale-[0.98]",
     outline:
-      "border-2 border-gray-300 bg-transparent hover:border-[#fec00c] hover:bg-[#fec00c]/5 hover:text-[#fec00c]",
-    ghost: "hover:bg-gray-100 hover:text-[#fec00c]",
+      "border border-slate-600 bg-transparent text-slate-200 hover:border-amber-300/60 hover:bg-amber-300/10 hover:text-amber-200",
+    ghost: "text-slate-300 hover:bg-slate-900 hover:text-sky-200",
   };
 
   const sizes = {

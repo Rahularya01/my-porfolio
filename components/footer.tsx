@@ -4,11 +4,10 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-zinc-950 text-zinc-300 relative overflow-hidden">
-      {/* Subtle gradient & texture */}
+    <footer className="relative overflow-hidden bg-zinc-950 text-zinc-300">
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-zinc-900/70 via-transparent to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-950/30 to-transparent"
       />
       <div
         aria-hidden
@@ -19,12 +18,11 @@ export default function Footer() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-10 md:grid-cols-3">
-          {/* Brand */}
           <div>
             <div className="font-extrabold text-2xl mb-4 tracking-tight">
-              <span className="text-yellow-400">Rahul</span>
+              <span className="text-amber-300">Rahul</span>
               <span className="text-zinc-100">.dev</span>
             </div>
             <p className="text-zinc-400 mb-6 max-w-sm leading-relaxed">
@@ -32,19 +30,21 @@ export default function Footer() {
               web applications that make an impact.
             </p>
             <div className="flex space-x-3">
-              <SocialLink href="https://github.com/rahul" label="GitHub">
+              <SocialLink href="https://github.com/Rahularya01" label="GitHub">
                 <Github size={18} />
               </SocialLink>
-              <SocialLink href="https://linkedin.com/in/rahul" label="LinkedIn">
+              <SocialLink
+                href="https://linkedin.com/in/rahul-arya-0993841b7"
+                label="LinkedIn"
+              >
                 <Linkedin size={18} />
               </SocialLink>
-              <SocialLink href="mailto:rahul@example.com" label="Email">
+              <SocialLink href="mailto:aryarahul819@gmail.com" label="Email">
                 <Mail size={18} />
               </SocialLink>
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="font-semibold text-lg mb-5 text-zinc-100">
               Quick Links
@@ -55,7 +55,7 @@ export default function Footer() {
                   <li key={link}>
                     <a
                       href={`#${link.toLowerCase()}`}
-                      className="text-zinc-400 hover:text-yellow-400 transition-colors duration-200"
+                      className="text-zinc-400 transition-colors duration-200 hover:text-sky-200"
                     >
                       {link}
                     </a>
@@ -65,11 +65,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
-            <h3 className="font-semibold text-lg mb-5 text-zinc-100">
-              Services
-            </h3>
+            <h3 className="mb-5 text-lg font-semibold text-zinc-100">Services</h3>
             <ul className="space-y-2 text-zinc-400">
               {[
                 "Web Development",
@@ -85,13 +82,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-zinc-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 md:flex-row">
           <p className="text-sm text-zinc-500">
             © {currentYear} Rahul. All rights reserved.
           </p>
           <p className="text-sm text-zinc-500 flex items-center">
-            Made with <Heart size={14} className="text-yellow-400 mx-1" /> and
+            Made with <Heart size={14} className="mx-1 text-amber-300" /> and
             lots of coffee
           </p>
         </div>
@@ -115,7 +111,7 @@ function SocialLink({
       aria-label={label}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-yellow-500 hover:text-yellow-400 transition-colors"
+      className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-900/60 text-zinc-400 transition-colors hover:border-sky-300/60 hover:text-sky-200"
     >
       {children}
     </a>

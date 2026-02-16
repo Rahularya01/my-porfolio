@@ -1,296 +1,175 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-  useReducedMotion,
-  useScroll,
-} from "framer-motion";
-import { ChevronDown, Github, Linkedin, Mail } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDownRight, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const skills = [
+  "Next.js",
+  "TypeScript",
+  "Node.js",
+  "PostgreSQL",
+  "React Native",
+  "Docker",
+];
+
+const stats = [
+  { value: "5+", label: "Years experience" },
+  { value: "50+", label: "Delivered projects" },
+  { value: "98%", label: "Client satisfaction" },
+];
 
 export default function HeroSection() {
   const reduce = useReducedMotion();
 
-  // Cursor → smoothed -1..1
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 140, damping: 18, mass: 0.2 });
-  const sy = useSpring(my, { stiffness: 140, damping: 18, mass: 0.2 });
-
-  useEffect(() => {
-    if (reduce) return;
-    const onMove = (e: MouseEvent) => {
-      mx.set((e.clientX / window.innerWidth) * 2 - 1);
-      my.set((e.clientY / window.innerHeight) * 2 - 1);
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [reduce, mx, my]);
-
-  // Scroll parallax
-  const { scrollYProgress } = useScroll();
-  const layerSlow = useTransform(scrollYProgress, [0, 1], [0, 120]);
-  const layerMid = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const layerFast = useTransform(scrollYProgress, [0, 1], [0, 24]);
-
-  // Mouse parallax
-  const p1x = useTransform(sx, (v) => v * 30);
-  const p1y = useTransform(sy, (v) => v * 30);
-  const p2x = useTransform(sx, (v) => v * -20);
-  const p2y = useTransform(sy, (v) => v * -18);
-  const titleX = useTransform(sx, (v) => v * -6);
-  const titleY = useTransform(sy, (v) => v * -4);
-
-  const scrollTo = (id: string) =>
+  const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen overflow-hidden bg-zinc-950 pt-24 text-zinc-100"
+      className="relative min-h-screen overflow-hidden bg-zinc-950 px-4 pb-16 pt-28 text-zinc-100 sm:px-6 lg:px-8"
     >
-      {/* BACKGROUND: nebula layers */}
-      <motion.div
+      <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ y: layerSlow }}
-      >
-        {/* deep glow */}
-        <motion.div
-          className="absolute -top-40 -left-40 h-[60vh] w-[60vw] blur-3xl opacity-60"
-          style={{
-            x: p1x,
-            y: p1y,
-            background:
-              "radial-gradient(closest-side, rgba(254,192,12,0.10), rgba(255,255,255,0.03), transparent 70%)",
-          }}
-        />
-        {/* aurora ribbon */}
-        <motion.div
-          className="absolute right-[-20vw] top-[-10vh] h-[120vh] w-[80vw] blur-3xl opacity-40"
-          style={{
-            x: p2x,
-            y: p2y,
-            background:
-              "conic-gradient(from 220deg at 50% 50%, rgba(254,192,12,0.10), rgba(255,255,255,0.05), rgba(254,192,12,0.10))",
-          }}
-        />
-        {/* faint vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_50%_30%,transparent,rgba(0,0,0,0.5))]" />
-        {/* subtle grain */}
-        <div
-          className="absolute inset-0 opacity-[0.06] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E\")",
-          }}
-        />
-      </motion.div>
-
-      {/* CURSOR SPOTLIGHT */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute -inset-32 blur-2xl"
         style={{
-          x: useTransform(sx, (v) => v * 120),
-          y: useTransform(sy, (v) => v * 90),
           background:
-            "radial-gradient(450px 280px at 50% 50%, rgba(254,192,12,0.14), transparent 60%)",
-          mixBlendMode: "screen",
+            "radial-gradient(900px 540px at 10% 12%, rgba(250,204,21,0.12), transparent 55%), radial-gradient(750px 460px at 92% 10%, rgba(125,211,252,0.14), transparent 50%)",
         }}
       />
 
-      {/* CONTENT GRID */}
-      <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 px-6 md:grid-cols-2">
-        {/* LEFT: copy */}
-        <div>
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-zinc-800/70 bg-zinc-900/50 px-3 py-1 text-xs text-zinc-300 backdrop-blur"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-yellow-400/80" />
-            India • Remote • Available
-          </motion.div>
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.55 }}
+        >
+          <span className="inline-flex items-center gap-2 rounded-full border border-slate-700/60 bg-slate-900/60 px-3 py-1 text-xs tracking-wide text-slate-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            Available for freelance and full-time roles
+          </span>
 
-          <motion.h1
-            className="mt-5 font-black leading-[1.05]"
-            style={{ x: titleX, y: titleY }}
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.05 }}
-          >
-            <span className="block text-4xl sm:text-5xl lg:text-7xl">
-              I build fast, elegant products
+          <h1 className="mt-6 text-4xl font-black leading-[1.05] sm:text-5xl lg:text-7xl">
+            Building reliable products
+            <span className="mt-2 block bg-gradient-to-r from-amber-300 via-yellow-300 to-sky-300 bg-clip-text text-transparent">
+              that feel premium to use
             </span>
-            <span className="relative mt-2 block text-3xl sm:text-4xl lg:text-6xl">
-              with <Wordmark>Next.js</Wordmark> & <Wordmark>Node</Wordmark>
-            </span>
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className="mt-5 max-w-xl text-zinc-400"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-          >
-            I’m Rahul — Full-Stack Developer focused on performance, developer
-            experience, and motion. Let’s turn your idea into something people
-            actually enjoy using.
-          </motion.p>
+          <p className="mt-5 max-w-2xl text-lg text-slate-300 sm:text-xl">
+            I&apos;m Rahul, a full-stack developer focused on modern web apps with
+            crisp UI, clean architecture, and performance-first engineering.
+          </p>
 
-          <motion.div
-            className="mt-7 flex flex-col gap-3 sm:flex-row"
-            initial={reduce ? false : { opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-          >
-            <Magnetic>
-              <Button
-                onClick={() => scrollTo("contact")}
-                size="lg"
-                className="group relative border border-yellow-500/20 bg-zinc-900/70 text-zinc-50 hover:bg-zinc-900 hover:text-yellow-300"
-              >
-                <span className="relative z-10">Let’s talk</span>
-                <span className="pointer-events-none absolute inset-0 rounded-md bg-yellow-500/10 opacity-0 transition-opacity group-hover:opacity-100" />
-              </Button>
-            </Magnetic>
-            <Magnetic>
-              <Button
-                onClick={() => scrollTo("projects")}
-                size="lg"
-                variant="outline"
-                className="border-zinc-700 bg-zinc-900/40 text-zinc-100 hover:bg-zinc-900 hover:text-yellow-300"
-              >
-                View projects
-              </Button>
-            </Magnetic>
-          </motion.div>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Button
+              size="lg"
+              onClick={() => scrollTo("contact")}
+              className="group border border-amber-300/25 bg-slate-900/80 text-slate-50 hover:bg-slate-900 hover:text-amber-200"
+            >
+              Start a project
+              <ArrowDownRight className="ml-1 size-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => scrollTo("projects")}
+              className="border-slate-600 bg-slate-900/50 text-slate-100 hover:bg-slate-900 hover:text-sky-200"
+            >
+              See case studies
+            </Button>
+          </div>
 
-          <motion.div
-            className="mt-8 flex items-center gap-5"
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.35 }}
-          >
+          <div className="mt-8 flex items-center gap-4">
             <Social href="https://github.com/Rahularya01" label="GitHub">
-              <Github size={22} />
+              <Github size={20} />
             </Social>
             <Social
               href="https://linkedin.com/in/rahul-arya-0993841b7"
               label="LinkedIn"
             >
-              <Linkedin size={22} />
+              <Linkedin size={20} />
             </Social>
             <Social href="mailto:aryarahul819@gmail.com" label="Email">
-              <Mail size={22} />
+              <Mail size={20} />
             </Social>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
-        {/* RIGHT: floating chips panel */}
         <motion.div
-          className="relative mx-auto w-full max-w-md"
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.65, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="relative"
         >
-          <Panel />
+          <div className="rounded-3xl border border-slate-700/50 bg-slate-950/70 p-6 shadow-[0_24px_80px_rgba(2,6,23,0.5)] backdrop-blur-xl sm:p-7">
+            <div className="flex items-center justify-between">
+              <p className="text-sm uppercase tracking-[0.16em] text-slate-400">
+                Current focus
+              </p>
+              <span className="rounded-full bg-amber-400/20 px-3 py-1 text-xs font-semibold text-amber-200">
+                2026
+              </span>
+            </div>
+
+            <h2 className="mt-4 text-2xl font-bold text-slate-100 sm:text-3xl">
+              Product engineering
+              <span className="block text-sky-200">for growth teams</span>
+            </h2>
+
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-xl border border-slate-700/60 bg-slate-900/70 p-3"
+                >
+                  <div className="text-2xl font-black text-amber-200">
+                    {stat.value}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-400">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <p className="mb-3 text-sm text-slate-300">Core toolkit</p>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <span
+                    key={skill}
+                    className="rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1 text-xs text-slate-200"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div
+            aria-hidden
+            className="absolute -left-8 -top-8 h-24 w-24 rounded-full bg-amber-300/20 blur-3xl"
+          />
+          <div
+            aria-hidden
+            className="absolute -bottom-8 -right-8 h-28 w-28 rounded-full bg-sky-300/25 blur-3xl"
+          />
         </motion.div>
       </div>
 
-      {/* marquee-ish ticker for motion balance */}
-      <Ticker
-        items={[
-          "Next.js",
-          "TypeScript",
-          "React",
-          "Node.js",
-          "PostgreSQL",
-          "MongoDB",
-          "Tailwind",
-          "Docker",
-          "RabbitMQ",
-          "R3F (optional)",
-        ]}
-        y={layerMid}
-      />
-
-      {/* Scroll cue */}
       <motion.button
-        onClick={() => scrollTo("about")}
-        aria-label="Scroll to About"
-        className="group absolute bottom-6 left-1/2 -translate-x-1/2 text-zinc-500 hover:text-yellow-300 transition-colors"
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.9, delay: 0.6 }}
-        style={{ y: layerFast }}
+        transition={{ delay: 0.65, duration: 0.5 }}
+        onClick={() => scrollTo("about")}
+        aria-label="Scroll to About section"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-slate-700/60 bg-slate-900/70 px-4 py-2 text-xs font-medium uppercase tracking-[0.15em] text-slate-300 transition-colors hover:text-amber-200"
       >
-        <ChevronDown className="size-8 animate-bounce group-hover:translate-y-1 transition-transform" />
+        Scroll
       </motion.button>
     </section>
-  );
-}
-
-/* ---------- Bits ---------- */
-
-function Wordmark({ children }: { children: React.ReactNode }) {
-  // glossy gradient + moving highlight
-  return (
-    <span className="relative inline-block bg-gradient-to-r from-yellow-300 via-yellow-500 to-amber-300 bg-clip-text text-transparent">
-      {children}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-40 [mask:linear-gradient(115deg,transparent,white,transparent)]"
-        style={{
-          background:
-            "linear-gradient(115deg, rgba(255,255,255,0) 35%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 65%)",
-        }}
-      />
-    </span>
-  );
-}
-
-function Magnetic({ children }: { children: React.ReactNode }) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (reduce) return;
-    const el = ref.current!;
-    let raf = 0;
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      const mx = e.clientX - (r.left + r.width / 2);
-      const my = e.clientY - (r.top + r.height / 2);
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        el.style.transform = `translate3d(${mx * 0.08}px, ${my * 0.08}px, 0)`;
-      });
-    };
-    const onLeave = () => {
-      cancelAnimationFrame(raf);
-      el.style.transform = "translate3d(0,0,0)";
-    };
-    el.addEventListener("mousemove", onMove);
-    el.addEventListener("mouseleave", onLeave);
-    return () => {
-      el.removeEventListener("mousemove", onMove);
-      el.removeEventListener("mouseleave", onLeave);
-      cancelAnimationFrame(raf);
-    };
-  }, [reduce]);
-
-  return (
-    <div ref={ref} className="inline-block will-change-transform">
-      {children}
-    </div>
   );
 }
 
@@ -309,112 +188,9 @@ function Social({
       aria-label={label}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative rounded-full p-2 text-zinc-400 transition-colors hover:text-yellow-300"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 text-slate-300 transition-all hover:border-sky-300/50 hover:text-sky-200"
     >
-      <span className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-yellow-500/0 blur-lg transition-opacity group-hover:opacity-40" />
       {children}
     </a>
-  );
-}
-
-function Panel() {
-  // Glass panel with floating chips (parallax drift)
-  return (
-    <div className="relative aspect-[5/6] w-full select-none">
-      <div className="absolute inset-0 -rotate-1 rounded-3xl bg-gradient-to-b from-zinc-900 to-zinc-950 ring-1 ring-zinc-800/70" />
-      <div className="relative z-10 h-full rounded-3xl border border-zinc-800/60 bg-zinc-950/80 p-6 backdrop-blur">
-        <div className="flex h-full flex-col justify-between">
-          <div>
-            <div className="text-sm text-zinc-400">Portfolio</div>
-            <div className="mt-1 text-3xl font-black tracking-tight text-zinc-100">
-              Rahul.dev
-            </div>
-            <div className="mt-1 text-zinc-400">
-              Full-Stack • React • Next.js
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              "API Design",
-              "Animations",
-              "Perf",
-              "DX",
-              "Microservices",
-              "Testing",
-            ].map((t, i) => (
-              <FloatingChip key={t} i={i}>
-                {t}
-              </FloatingChip>
-            ))}
-          </div>
-        </div>
-      </div>
-      {/* floating lights */}
-      <motion.div
-        aria-hidden
-        className="absolute -left-6 top-10 h-28 w-28 rounded-full blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(254,192,12,0.22), transparent 60%)",
-        }}
-        initial={{ opacity: 0.6, y: 8 }}
-        animate={{ opacity: 0.9, y: -8 }}
-        transition={{ repeat: Infinity, repeatType: "mirror", duration: 3.2 }}
-      />
-      <motion.div
-        aria-hidden
-        className="absolute -right-4 bottom-6 h-32 w-32 rounded-full blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(254,192,12,0.16), transparent 60%)",
-        }}
-        initial={{ opacity: 0.5, y: -6 }}
-        animate={{ opacity: 0.85, y: 6 }}
-        transition={{ repeat: Infinity, repeatType: "mirror", duration: 2.6 }}
-      />
-    </div>
-  );
-}
-
-function FloatingChip({
-  children,
-  i,
-}: {
-  children: React.ReactNode;
-  i: number;
-}) {
-  return (
-    <motion.div
-      className="rounded-lg border border-zinc-800/60 bg-zinc-900/40 px-3 py-2 text-sm text-zinc-300"
-      initial={{ y: 0, opacity: 0.95 }}
-      animate={{ y: [0, -6, 0], opacity: [0.95, 1, 0.95] }}
-      transition={{
-        duration: 3 + (i % 3) * 0.4,
-        repeat: Infinity,
-        repeatType: "mirror",
-        ease: "easeInOut",
-        delay: i * 0.15,
-      }}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
-function Ticker({ items, y }: { items: string[]; y: any }) {
-  return (
-    <motion.div className="relative z-10 mt-14" style={{ y }}>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-zinc-950 via-transparent to-zinc-950" />
-      <div className="overflow-hidden whitespace-nowrap py-3 text-zinc-500">
-        <div className="animate-[ticker_22s_linear_infinite] inline-block">
-          {items.concat(items).map((t, i) => (
-            <span key={i} className="mx-6 text-sm tracking-wider">
-              • {t}
-            </span>
-          ))}
-        </div>
-      </div>
-      <style>{`@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
-    </motion.div>
   );
 }
