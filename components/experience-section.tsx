@@ -1,7 +1,7 @@
 "use client";
 
 import { Building2, Calendar, MapPin } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Container from "@/components/ui/container";
 
 const experiences = [
@@ -68,9 +68,36 @@ const experiences = [
 ];
 
 export default function ExperienceSection() {
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
-    <section id="experience" className="bg-zinc-950 py-32 selection:bg-white/20">
-      <Container>
+    <section id="experience" className="relative bg-zinc-950 py-32 overflow-hidden selection:bg-white/20">
+      {/* Background patterns */}
+      <div className="absolute inset-0 z-0 bg-grid-white opacity-40" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.08),transparent_70%)]" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.08),transparent_70%)]" />
+      
+      <Container className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -90,16 +117,19 @@ export default function ExperienceSection() {
         <div className="relative">
           <div className="absolute left-6 top-0 h-full w-px bg-white/10 md:left-1/2 md:-translate-x-px" />
 
-          <div className="space-y-16">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            className="space-y-16"
+          >
             {experiences.map((exp, i) => {
               const flip = i % 2 !== 0;
               return (
                 <motion.div
                   key={exp.company + i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8 }}
+                  variants={itemVariants}
                   className={`relative flex items-stretch ${
                     flip ? "md:flex-row-reverse" : "md:flex-row"
                   }`}
@@ -113,7 +143,7 @@ export default function ExperienceSection() {
                       flip ? "md:pl-16" : "md:pr-16 md:text-right"
                     }`}
                   >
-                    <div className="rounded-[2rem] border border-white/10 bg-black p-8 sm:p-10 transition-colors hover:border-white/20 hover:bg-zinc-900/30">
+                    <div className="rounded-[2rem] border border-white/10 bg-black p-8 sm:p-10 transition-all hover:border-white/30 hover:bg-zinc-900/40">
                       <div
                         className={`flex flex-col gap-4 mb-6 ${
                           flip ? "" : "md:items-end"
@@ -167,7 +197,7 @@ export default function ExperienceSection() {
                 </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </Container>
     </section>

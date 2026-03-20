@@ -35,9 +35,13 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="min-h-[100svh] flex items-center bg-black pt-20 selection:bg-white/20"
+      className="relative min-h-[100svh] flex items-center bg-black pt-20 overflow-hidden selection:bg-white/20"
     >
-      <Container>
+      {/* Background patterns */}
+      <div className="absolute inset-0 z-0 bg-grid-white opacity-60" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.15),transparent_70%)]" />
+      
+      <Container className="relative z-10">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -59,7 +63,7 @@ export default function HeroSection() {
             className="mt-10 font-display text-6xl font-medium leading-[0.95] tracking-tighter text-white sm:text-7xl lg:text-8xl xl:text-9xl"
           >
             Digital products <br />
-            <span className="text-zinc-600">done right.</span>
+            <span className="text-zinc-600 font-light">done right.</span>
           </motion.h1>
 
           <motion.p
