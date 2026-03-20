@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useRef, useState, useEffect } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useMemo, useState } from "react";
 import { ExternalLink, Github } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import Container from "@/components/ui/container";
 
 const projects = [
   {
@@ -37,13 +37,7 @@ const projects = [
     title: "Repsen – AI Startup Assistant",
     description:
       "AI assistant for launch kits, PR, emails, and social content. Built for speed.",
-    technologies: [
-      "Next.js",
-      "TypeScript",
-      "OpenAI API",
-      "Tailwind CSS",
-      "MongoDB",
-    ],
+    technologies: ["Next.js", "TypeScript", "OpenAI API", "Tailwind CSS", "MongoDB"],
     features: ["AI Kits", "Blocks Editor", "Dashboard", "Tone Rewriting"],
     liveUrl: "https://repsen.io",
     category: "AI SaaS",
@@ -69,7 +63,6 @@ const projects = [
 ];
 
 export default function ProjectsSection() {
-  const reduce = useReducedMotion();
   const categories = useMemo(
     () => ["All", ...Array.from(new Set(projects.map((p) => p.category)))],
     [],
@@ -84,136 +77,86 @@ export default function ProjectsSection() {
     [active],
   );
 
-  // background micro-aurora (no perf hit)
   return (
-    <section
-      id="projects"
-      className="relative overflow-hidden bg-zinc-950 py-24 text-zinc-100"
-    >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-40 blur-3xl opacity-70"
-        style={{
-          background:
-            "radial-gradient(700px 400px at 15% 15%, rgba(254,192,12,0.10), transparent 60%), radial-gradient(700px 400px at 85% 25%, rgba(255,255,255,0.05), transparent 60%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E\")",
-        }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <section id="projects" className="bg-white py-32 selection:bg-black/10 selection:text-black">
+      <Container>
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="mb-10 text-center"
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-16 text-center"
         >
-          <h2 className="mb-3 text-3xl sm:text-4xl font-extrabold tracking-tight">
-            <span className="bg-gradient-to-r from-yellow-300 via-yellow-500 to-amber-300 bg-clip-text text-transparent">
-              Featured Projects
-            </span>
+          <h2 className="mb-4 font-display text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl">
+            Featured Projects
           </h2>
-          <p className="mx-auto max-w-3xl text-zinc-400">
+          <p className="mx-auto max-w-2xl text-lg text-zinc-500">
             Modern, scalable builds focused on performance, UX, and
             maintainability.
           </p>
         </motion.div>
 
-        {/* Filter bar */}
-        <FilterBar
-          categories={categories}
-          active={active}
-          onChange={setActive}
-        />
-
-        {/* Grid */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mt-8 grid gap-8 md:grid-cols-2"
-        >
-          <AnimatePresence mode="popLayout">
-            {filtered.map((p, i) => (
-              <ProjectCard key={p.title} p={p} delay={i * 0.04} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-16 rounded-2xl border border-yellow-500/20 bg-zinc-950/70 p-8 text-center shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur"
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mx-auto mb-16 flex flex-wrap items-center justify-center gap-2"
         >
-          <h3 className="mb-2 text-xl font-bold">Got an ambitious idea?</h3>
-          <p className="mb-4 text-zinc-400">
-            Let’s build something fast, beautiful, and reliable.
-          </p>
-          <Button className="border border-yellow-500/20 bg-zinc-900/70 text-zinc-50 hover:bg-zinc-900 hover:text-yellow-300">
-            Get In Touch
-          </Button>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- Components ---------------- */
-
-function FilterBar({
-  categories,
-  active,
-  onChange,
-}: {
-  categories: string[];
-  active: string;
-  onChange: (c: string) => void;
-}) {
-  return (
-    <div className="mx-auto w-full max-w-3xl">
-      <div className="relative flex items-center gap-1 rounded-xl bg-zinc-950/50 p-1 ring-1 ring-inset ring-zinc-800/70 backdrop-blur">
-        {categories.map((c) => {
-          const selected = active === c;
-          return (
-            <motion.button
+          {categories.map((c) => (
+            <button
               key={c}
-              onClick={() => onChange(c)}
-              className={`relative whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                selected
-                  ? "text-yellow-300"
-                  : "text-zinc-300 hover:text-yellow-300"
+              onClick={() => setActive(c)}
+              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                active === c
+                  ? "bg-zinc-900 text-white"
+                  : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900"
               }`}
             >
-              {selected && (
-                <motion.span
-                  layoutId="filter-pill"
-                  className="absolute inset-0 -z-10 rounded-lg bg-gradient-to-b from-yellow-500/20 to-yellow-500/10 ring-1 ring-inset ring-yellow-500/25 shadow-[0_6px_18px_rgba(234,179,8,0.18)]"
-                  transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                />
-              )}
               {c}
-            </motion.button>
-          );
-        })}
-      </div>
-    </div>
+            </button>
+          ))}
+        </motion.div>
+
+        <motion.div
+          layout
+          className="grid gap-6 md:grid-cols-2"
+        >
+          {filtered.map((p, index) => (
+            <ProjectCard key={p.title} p={p} index={index} />
+          ))}
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-24 rounded-[2rem] border border-zinc-200 bg-zinc-50 p-10 text-center sm:p-16"
+        >
+          <h3 className="mb-4 font-display text-3xl font-medium text-zinc-900 sm:text-4xl">
+            Got an ambitious idea?
+          </h3>
+          <p className="mb-8 text-lg text-zinc-500">
+            Let&apos;s build something fast, beautiful, and reliable.
+          </p>
+          <button
+            onClick={() =>
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="rounded-full bg-zinc-900 px-8 py-4 text-sm font-medium text-white transition-all hover:bg-black hover:scale-105 active:scale-95"
+          >
+            Get In Touch
+          </button>
+        </motion.div>
+      </Container>
+    </section>
   );
 }
 
 function ProjectCard({
   p,
-  delay = 0,
+  index,
 }: {
   p: {
     title: string;
@@ -224,164 +167,86 @@ function ProjectCard({
     githubUrl?: string;
     category: string;
   };
-  delay?: number;
+  index: number;
 }) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const glow = useRef<HTMLDivElement>(null);
-
-  // micro 3D + glow
-  useEffect(() => {
-    if (reduce) return;
-    const el = ref.current!;
-    const g = glow.current!;
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      const px = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-      const py = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-      el.style.transform = `rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(
-        px * 10
-      ).toFixed(2)}deg) translateZ(0)`;
-      g.style.opacity = "1";
-      g.style.left = `${((px + 1) / 2) * 100}%`;
-      g.style.top = `${((py + 1) / 2) * 100}%`;
-    };
-    const onLeave = () => {
-      el.style.transform = "rotateX(0deg) rotateY(0deg) translateZ(0)";
-      g.style.opacity = "0";
-    };
-    el.addEventListener("mousemove", onMove);
-    el.addEventListener("mouseleave", onLeave);
-    return () => {
-      el.removeEventListener("mousemove", onMove);
-      el.removeEventListener("mouseleave", onLeave);
-    };
-  }, [reduce]);
-
   const open = (url?: string) => url && window.open(url, "_blank");
 
   return (
     <motion.div
       layout
-      initial={reduce ? false : { opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.55, delay }}
-      className="relative rounded-2xl p-[1px]"
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="group relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-white transition-all hover:border-zinc-300 hover:shadow-xl hover:shadow-zinc-200/50"
     >
-      {/* animated conic border */}
-      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[conic-gradient(from_var(--a),rgba(254,192,12,0.18),transparent_35%,rgba(254,192,12,0.18))] [animation:spin_6s_linear_infinite] [--a:0deg]" />
-      <style>{`@keyframes spin { to { --a: 360deg; } }`}</style>
+      <div className="border-b border-zinc-100 bg-zinc-50 p-8 transition-colors group-hover:bg-zinc-100/50">
+        <div className="mb-4 flex items-center justify-between">
+          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600">
+            {p.category}
+          </span>
+        </div>
+        <h3 className="font-display text-2xl font-medium text-zinc-900">{p.title}</h3>
+      </div>
 
-      <div
-        ref={ref}
-        style={{ transformStyle: "preserve-3d", willChange: "transform" }}
-        className="relative overflow-hidden rounded-2xl border border-zinc-800/70 bg-zinc-950/70 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur"
-      >
-        {/* mouse glow */}
-        <span
-          ref={glow}
-          aria-hidden
-          className="pointer-events-none absolute h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500/10 blur-2xl opacity-0 transition-opacity"
-          style={{ left: "50%", top: "50%" }}
-        />
+      <div className="p-8">
+        <p className="mb-8 text-base leading-relaxed text-zinc-500">
+          {p.description}
+        </p>
 
-        {/* header */}
-        <div className="relative border-b border-zinc-800/60 bg-gradient-to-r from-yellow-500/10 via-yellow-500/5 to-transparent p-6">
-          <div className="mb-3 flex items-center justify-between">
-            <span className="rounded-full bg-yellow-400 px-3 py-1 text-xs font-semibold text-black">
-              {p.category}
-            </span>
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-500/10 ring-1 ring-yellow-500/20">
-              <div className="h-4 w-4 rounded-md bg-yellow-500/40" />
-            </div>
+        <div className="mb-8">
+          <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-zinc-400">
+            Key Features
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {p.features.map((f) => (
+              <span
+                key={f}
+                className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600"
+              >
+                {f}
+              </span>
+            ))}
           </div>
-          <h3 className="text-xl font-bold">{p.title}</h3>
         </div>
 
-        {/* body */}
-        <div className="p-6">
-          <p className="mb-6 text-sm leading-relaxed text-zinc-400">
-            {p.description}
-          </p>
-
-          <Section title="Key Features">
-            {p.features.map((f) => (
-              <Badge key={f} tone="neutral">
-                {f}
-              </Badge>
-            ))}
-          </Section>
-
-          <Section title="Technologies">
+        <div className="mb-8">
+          <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-zinc-400">
+            Technologies
+          </h4>
+          <div className="flex flex-wrap gap-2">
             {p.technologies.map((t) => (
-              <Badge key={t} tone="yellow">
+              <span
+                key={t}
+                className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600"
+              >
                 {t}
-              </Badge>
+              </span>
             ))}
-          </Section>
-
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            {p.liveUrl && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => open(p.liveUrl)}
-                className="flex items-center gap-2 border-yellow-500/20 bg-zinc-900/70 text-zinc-50 hover:bg-zinc-900 hover:text-yellow-300"
-              >
-                <ExternalLink size={14} />
-                Live
-              </Button>
-            )}
-            {p.githubUrl && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => open(p.githubUrl)}
-                className="flex items-center gap-2 border-zinc-700 bg-zinc-900/40 text-zinc-100 hover:bg-zinc-900 hover:text-yellow-300"
-              >
-                <Github size={14} />
-                Source
-              </Button>
-            )}
           </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-zinc-100">
+          {p.liveUrl && (
+            <button
+              onClick={() => open(p.liveUrl)}
+              className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-xs font-medium text-white transition-all hover:bg-black"
+            >
+              <ExternalLink size={16} />
+              Visit Live
+            </button>
+          )}
+          {p.githubUrl && (
+            <button
+              onClick={() => open(p.githubUrl)}
+              className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-transparent px-5 py-2.5 text-xs font-medium text-zinc-900 transition-all hover:bg-zinc-50"
+            >
+              <Github size={16} />
+              Source Code
+            </button>
+          )}
         </div>
       </div>
     </motion.div>
-  );
-}
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="mb-6">
-      <h4 className="mb-3 text-sm font-semibold text-zinc-100">{title}</h4>
-      <div className="flex flex-wrap gap-2">{children}</div>
-    </div>
-  );
-}
-
-function Badge({
-  children,
-  tone = "neutral",
-}: {
-  children: React.ReactNode;
-  tone?: "neutral" | "yellow";
-}) {
-  const styles =
-    tone === "yellow"
-      ? "bg-yellow-500/10 text-yellow-300 ring-yellow-500/20"
-      : "bg-zinc-900/60 text-zinc-300 ring-zinc-800";
-  return (
-    <span
-      className={`rounded-full px-3 py-1 text-xs ring-1 ring-inset ${styles}`}
-    >
-      {children}
-    </span>
   );
 }

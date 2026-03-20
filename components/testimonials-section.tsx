@@ -1,16 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "framer-motion";
 import { Quote, Star } from "lucide-react";
+import { motion } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Container from "@/components/ui/container";
 
 const testimonials = [
   {
@@ -76,209 +69,100 @@ const testimonials = [
 ];
 
 export default function TestimonialsSection() {
-  const reduce = useReducedMotion();
-
-  // subtle cursor-reactive background glow
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 140, damping: 18 });
-  const sy = useSpring(my, { stiffness: 140, damping: 18 });
-
-  useEffect(() => {
-    if (reduce) return;
-    const onMove = (e: MouseEvent) => {
-      mx.set((e.clientX / window.innerWidth) * 2 - 1);
-      my.set((e.clientY / window.innerHeight) * 2 - 1);
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [reduce, mx, my]);
-
-  const glowX = useTransform(sx, (v) => v * 80);
-  const glowY = useTransform(sy, (v) => v * 60);
-
   return (
-    <section
-      id="testimonials"
-      className="relative overflow-hidden bg-zinc-950 py-24 text-zinc-100"
-    >
-      {/* aurora & grain */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute -inset-40 blur-3xl opacity-70"
-        style={{
-          x: glowX,
-          y: glowY,
-          background:
-            "radial-gradient(700px 400px at 20% 20%, rgba(254,192,12,0.10), transparent 60%), radial-gradient(700px 400px at 80% 25%, rgba(255,255,255,0.05), transparent 60%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E\")",
-        }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* header */}
+    <section id="testimonials" className="bg-black py-32 selection:bg-white/20">
+      <Container>
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6 }}
-          className="mb-16 text-center"
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20 text-center"
         >
-          <h2 className="mb-4 text-3xl sm:text-4xl font-extrabold tracking-tight">
-            <span className="bg-gradient-to-r from-yellow-300 via-yellow-500 to-amber-300 bg-clip-text text-transparent">
-              What Clients Say
-            </span>
+          <h2 className="mb-6 font-display text-4xl font-medium tracking-tight text-white sm:text-5xl">
+            Client Feedback
           </h2>
-          <p className="mx-auto max-w-3xl text-lg text-zinc-400">
-            Don’t just take my word for it—here’s what collaborators say about
-            working together.
+          <p className="mx-auto max-w-2xl text-lg md:text-xl font-light text-zinc-400">
+            Don&apos;t just take my word for it — here&apos;s what
+            collaborators say about working together.
           </p>
         </motion.div>
 
-        {/* cards grid */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-        >
-          <AnimatePresence>
-            {testimonials.map((t, i) => (
-              <TestimonialCard key={t.name} t={t} delay={i * 0.06} />
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {testimonials.map((t, i) => (
+            <TestimonialCard key={t.name} t={t} index={i} />
+          ))}
+        </div>
 
-        {/* stats banner */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-16 rounded-2xl border border-yellow-500/20 bg-zinc-950/70 p-8 text-center shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur"
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-24 rounded-[2rem] border border-white/10 bg-zinc-950 p-10 text-center sm:p-16"
         >
-          <h3 className="mb-2 text-2xl font-bold">Ready to work together?</h3>
-          <p className="mb-6 text-zinc-400">
-            Join the list of satisfied clients and let’s build something
+          <h3 className="mb-4 font-display text-3xl font-medium text-white">
+            Ready to work together?
+          </h3>
+          <p className="mb-10 text-lg font-light text-zinc-400">
+            Join the list of satisfied clients and let&apos;s build something
             remarkable.
           </p>
-          <div className="mx-auto grid max-w-3xl grid-cols-3 gap-6 text-sm text-zinc-400">
+          <div className="mx-auto grid max-w-lg grid-cols-3 gap-8">
             <Stat k="50+" v="Projects" />
             <Stat k="98%" v="Satisfaction" />
-            <Stat k="5★" v="Avg Rating" />
+            <Stat k="5.0" v="Avg Rating" />
           </div>
         </motion.div>
-      </div>
+      </Container>
     </section>
   );
 }
 
-/* ---------------- Bits ---------------- */
-
 function TestimonialCard({
   t,
-  delay = 0,
+  index,
 }: {
   t: (typeof testimonials)[number];
-  delay?: number;
+  index: number;
 }) {
-  const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const glow = useRef<HTMLDivElement>(null);
-
-  // micro 3D tilt + mouse glow
-  useEffect(() => {
-    if (reduce) return;
-    const el = ref.current!;
-    const g = glow.current!;
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      const px = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
-      const py = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
-      el.style.transform = `rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(
-        px * 10
-      ).toFixed(2)}deg) translateZ(0)`;
-      g.style.opacity = "1";
-      g.style.left = `${((px + 1) / 2) * 100}%`;
-      g.style.top = `${((py + 1) / 2) * 100}%`;
-    };
-    const onLeave = () => {
-      el.style.transform = "rotateX(0deg) rotateY(0deg) translateZ(0)";
-      g.style.opacity = "0";
-    };
-    el.addEventListener("mousemove", onMove);
-    el.addEventListener("mouseleave", onLeave);
-    return () => {
-      el.removeEventListener("mousemove", onMove);
-      el.removeEventListener("mouseleave", onLeave);
-    };
-  }, [reduce]);
-
   return (
     <motion.div
-      initial={reduce ? false : { opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.25 }}
-      transition={{ duration: 0.55, delay }}
-      className="relative rounded-2xl p-[1px]"
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="flex flex-col justify-between rounded-[2rem] border border-white/10 bg-zinc-950 p-8 transition-colors hover:bg-zinc-900/50"
     >
-      {/* animated conic border */}
-      <div className="pointer-events-none absolute inset-0 rounded-2xl bg-[conic-gradient(from_var(--a),rgba(254,192,12,0.18),transparent_35%,rgba(254,192,12,0.18))] [animation:spin_6s_linear_infinite] [--a:0deg]" />
-      <style>{`@keyframes spin { to { --a: 360deg; } }`}</style>
-
-      <div
-        ref={ref}
-        style={{ transformStyle: "preserve-3d", willChange: "transform" }}
-        className="relative overflow-hidden rounded-2xl border border-zinc-800/70 bg-zinc-950/70 p-6 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur"
-      >
-        {/* mouse glow */}
-        <span
-          ref={glow}
-          aria-hidden
-          className="pointer-events-none absolute h-36 w-36 -translate-x-1/2 -translate-y-1/2 rounded-full bg-yellow-500/10 blur-2xl opacity-0 transition-opacity"
-          style={{ left: "50%", top: "50%" }}
-        />
-
-        {/* quote badge */}
-        <div className="absolute -top-3 -left-3 flex h-9 w-9 items-center justify-center rounded-full bg-yellow-400 text-black shadow">
-          <Quote size={16} />
-        </div>
-
-        {/* rating */}
-        <div className="mb-3 flex items-center">
+      <div>
+        <div className="mb-6 flex items-center gap-1">
           {Array.from({ length: t.rating }).map((_, i) => (
             <Star
               key={i}
               size={16}
-              className="fill-yellow-400 text-yellow-400"
+              className="fill-white text-white"
             />
           ))}
         </div>
 
-        {/* text */}
-        <p className="mb-5 text-sm leading-relaxed text-zinc-300">
-          “{t.testimonial}”
+        <Quote className="mb-4 text-white/20" size={32} />
+        
+        <p className="mb-8 text-base font-light leading-relaxed text-zinc-300">
+          &ldquo;{t.testimonial}&rdquo;
         </p>
+      </div>
 
-        {/* project tag */}
-        <div className="mb-5">
-          <span className="rounded-full bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-300 ring-1 ring-inset ring-yellow-500/20">
+      <div>
+        <div className="mb-6">
+          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-zinc-400">
             {t.project}
           </span>
         </div>
 
-        {/* person */}
-        <div className="flex items-center">
-          <Avatar className="mr-4 h-12 w-12">
+        <div className="flex items-center pt-6 border-t border-white/10">
+          <Avatar className="mr-4 h-12 w-12 border border-white/10">
             <AvatarImage src={t.image} alt={t.name} />
-            <AvatarFallback className="bg-yellow-500/10 font-semibold text-yellow-400">
+            <AvatarFallback className="bg-zinc-800 text-sm font-medium text-white">
               {t.name
                 .split(" ")
                 .map((n) => n[0])
@@ -286,9 +170,10 @@ function TestimonialCard({
             </AvatarFallback>
           </Avatar>
           <div>
-            <h4 className="text-sm font-semibold">{t.name}</h4>
-            <p className="text-xs text-zinc-400">{t.position}</p>
-            <p className="text-xs font-medium text-yellow-300">{t.company}</p>
+            <h4 className="font-display text-base font-medium text-white">{t.name}</h4>
+            <p className="text-sm font-light text-zinc-500">
+              {t.position} · {t.company}
+            </p>
           </div>
         </div>
       </div>
@@ -299,8 +184,8 @@ function TestimonialCard({
 function Stat({ k, v }: { k: string; v: string }) {
   return (
     <div className="text-center">
-      <div className="text-2xl font-bold text-yellow-400">{k}</div>
-      <div>{v}</div>
+      <div className="font-display text-3xl font-medium text-white sm:text-4xl">{k}</div>
+      <div className="mt-2 text-xs font-medium uppercase tracking-widest text-zinc-500">{v}</div>
     </div>
   );
 }

@@ -1,62 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Send,
-  Github,
-  Linkedin,
-  CheckCircle,
-  AlertCircle,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-
+import { useState } from "react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin, CheckCircle, AlertCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
+import Container from "@/components/ui/container";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Invalid email address"),
   subject: z.string().min(2, "Subject must be at least 2 characters"),
   message: z.string().min(10, "Message must be at least 10 characters"),
-  // honeypot
   company: z.string().max(0).optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function ContactSection() {
-  const reduce = useReducedMotion();
-
-  // subtle cursor-reactive background glow
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 140, damping: 18 });
-  const sy = useSpring(my, { stiffness: 140, damping: 18 });
-
-  useEffect(() => {
-    if (reduce) return;
-    const onMove = (e: MouseEvent) => {
-      mx.set((e.clientX / window.innerWidth) * 2 - 1);
-      my.set((e.clientY / window.innerHeight) * 2 - 1);
-    };
-    window.addEventListener("mousemove", onMove, { passive: true });
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [reduce, mx, my]);
-
-  const glowX = useTransform(sx, (v) => v * 80);
-  const glowY = useTransform(sy, (v) => v * 60);
-
   const {
     register,
     handleSubmit,
@@ -85,7 +47,7 @@ export default function ContactSection() {
       if (response.ok) {
         setSubmitStatus({
           type: "success",
-          message: "Message sent! I’ll get back to you soon.",
+          message: "Message sent! I'll get back to you soon.",
         });
         reset();
       } else {
@@ -103,94 +65,80 @@ export default function ContactSection() {
   };
 
   return (
-    <section
-      id="contact"
-      className="relative overflow-hidden bg-zinc-950 py-24 text-zinc-100"
-    >
-      {/* aurora + grain background */}
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute -inset-40 blur-3xl opacity-70"
-        style={{
-          x: glowX,
-          y: glowY,
-          background:
-            "radial-gradient(700px 400px at 20% 20%, rgba(254,192,12,0.10), transparent 60%), radial-gradient(700px 400px at 80% 25%, rgba(255,255,255,0.05), transparent 60%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.06] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E\")",
-        }}
-      />
+    <section id="contact" className="bg-white py-32 selection:bg-black/10 selection:text-black">
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20 text-center"
+        >
+          <h2 className="mb-6 font-display text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl">
+            Let&apos;s Work Together
+          </h2>
+          <p className="mx-auto max-w-2xl text-lg md:text-xl font-light text-zinc-500">
+            Have a project or idea? I&apos;m open to new opportunities, collaborations,
+            or a quick tech chat.
+          </p>
+        </motion.div>
 
-      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <Header />
-
-        <div className="grid gap-10 lg:grid-cols-2">
-          {/* Contact Info Card */}
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
           <motion.div
-            initial={reduce ? false : { opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="relative rounded-2xl border border-zinc-800/70 bg-zinc-950/70 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur"
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="rounded-[2rem] border border-zinc-200 bg-zinc-50 p-8 sm:p-10"
           >
-            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-yellow-500/10" />
-            <h3 className="mb-6 text-2xl font-bold">Get in Touch</h3>
-            <p className="mb-8 text-zinc-400">
-              Whether it’s a product build or joining your team, I bring 5+
-              years of full-stack experience. Let’s ship something great.
+            <h3 className="mb-6 font-display text-2xl font-medium text-zinc-900">Get in Touch</h3>
+            <p className="mb-10 text-base font-light leading-relaxed text-zinc-500">
+              Whether it&apos;s a product build or joining your team, I bring 5+
+              years of full-stack experience. Let&apos;s ship something great.
             </p>
 
             <InfoRow
-              icon={<Mail size={20} />}
+              icon={<Mail size={20} strokeWidth={1.5} />}
               title="Email"
               value="aryarahul819@gmail.com"
               href="mailto:aryarahul819@gmail.com"
             />
             <InfoRow
-              icon={<Phone size={20} />}
+              icon={<Phone size={20} strokeWidth={1.5} />}
               title="Phone"
               value="+91 70093 91495"
               href="tel:+917009391495"
             />
             <InfoRow
-              icon={<MapPin size={20} />}
+              icon={<MapPin size={20} strokeWidth={1.5} />}
               title="Location"
               value="Based in India — Available Worldwide"
             />
 
-            <div className="mt-8">
-              <h4 className="mb-3 font-semibold">Connect Online</h4>
-              <div className="flex gap-3">
+            <div className="mt-12 pt-8 border-t border-zinc-200">
+              <h4 className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-400">Connect Online</h4>
+              <div className="flex gap-4">
                 <Social href="https://github.com/Rahularya01" label="GitHub">
-                  <Github size={18} />
+                  <Github size={20} strokeWidth={1.5} />
                 </Social>
                 <Social
                   href="https://linkedin.com/in/rahul-arya-0993841b7"
                   label="LinkedIn"
                 >
-                  <Linkedin size={18} />
+                  <Linkedin size={20} strokeWidth={1.5} />
                 </Social>
               </div>
             </div>
           </motion.div>
 
-          {/* Form Card */}
           <motion.div
-            initial={reduce ? false : { opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="relative rounded-2xl border border-zinc-800/70 bg-zinc-950/70 p-8 shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur"
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="rounded-[2rem] border border-zinc-200 bg-white p-8 sm:p-10"
           >
-            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-yellow-500/10" />
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              {/* Honeypot */}
               <input
                 type="text"
                 tabIndex={-1}
@@ -199,7 +147,7 @@ export default function ContactSection() {
                 className="hidden"
               />
 
-              <div className="grid gap-6 md:grid-cols-2">
+              <div className="grid gap-6 sm:grid-cols-2">
                 <Field
                   label="Name"
                   id="name"
@@ -257,7 +205,7 @@ export default function ContactSection() {
                 input={
                   <textarea
                     id="message"
-                    rows={6}
+                    rows={5}
                     placeholder="Tell me about your project..."
                     {...register("message")}
                     required
@@ -266,26 +214,24 @@ export default function ContactSection() {
                 }
               />
 
-              <Button
+              <button
                 type="submit"
-                size="lg"
                 disabled={isSubmitting}
-                className="group w-full items-center justify-center gap-2 border border-yellow-500/20 bg-zinc-900/70 text-zinc-50 hover:bg-zinc-900 hover:text-yellow-300 disabled:cursor-not-allowed disabled:opacity-70"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-900 px-8 py-4 text-base font-medium text-white transition-all hover:bg-black disabled:cursor-not-allowed disabled:opacity-70 hover:scale-[1.02] active:scale-[0.98]"
               >
-                <Send size={20} />
+                <Send size={18} />
                 {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
+              </button>
 
-              {/* live region for status */}
               <div aria-live="polite" aria-atomic="true">
                 {submitStatus.type && (
                   <motion.div
-                    initial={{ opacity: 0, y: 12 }}
+                    initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`mt-3 flex items-center gap-3 rounded-lg border p-4 text-sm ${
+                    className={`mt-4 flex items-center gap-3 rounded-xl border p-4 text-sm ${
                       submitStatus.type === "success"
-                        ? "border-green-500/30 bg-green-500/10 text-green-300"
-                        : "border-red-500/30 bg-red-500/10 text-red-300"
+                        ? "border-emerald-500/20 bg-emerald-50 text-emerald-700"
+                        : "border-red-500/20 bg-red-50 text-red-700"
                     }`}
                   >
                     {submitStatus.type === "success" ? (
@@ -297,49 +243,19 @@ export default function ContactSection() {
                   </motion.div>
                 )}
               </div>
-
-              <p className="pt-2 text-center text-xs text-zinc-500">
-                By submitting, you agree to be contacted back about your
-                inquiry.
-              </p>
             </form>
           </motion.div>
         </div>
-      </div>
+      </Container>
     </section>
-  );
-}
-
-/* ---------------- bits ---------------- */
-
-function Header() {
-  const reduce = useReducedMotion();
-  return (
-    <motion.div
-      initial={reduce ? false : { opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.3 }}
-      transition={{ duration: 0.6 }}
-      className="mb-12 text-center"
-    >
-      <h2 className="mb-3 text-3xl sm:text-4xl font-extrabold tracking-tight">
-        <span className="bg-gradient-to-r from-yellow-300 via-yellow-500 to-amber-300 bg-clip-text text-transparent">
-          Let’s Work Together
-        </span>
-      </h2>
-      <p className="mx-auto max-w-3xl text-zinc-400">
-        Have a project or idea? I’m open to new opportunities, collaborations,
-        or a quick tech chat.
-      </p>
-    </motion.div>
   );
 }
 
 function inputClass({ textarea = false }: { textarea?: boolean } = {}) {
   return [
-    "w-full rounded-lg border bg-zinc-900/60 text-zinc-100 placeholder:text-zinc-500",
-    "border-zinc-800 focus:border-yellow-400/60 focus:ring-2 focus:ring-yellow-400/20",
-    "transition-colors px-4 py-3",
+    "w-full rounded-xl border bg-zinc-50 text-zinc-900 placeholder:text-zinc-400",
+    "border-zinc-200 focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-400",
+    "transition-all px-5 py-3.5 text-base font-light",
     textarea ? "resize-none" : "",
   ].join(" ");
 }
@@ -357,15 +273,12 @@ function Field({
 }) {
   return (
     <div>
-      <label
-        htmlFor={id}
-        className="mb-2 block text-sm font-medium text-zinc-300"
-      >
+      <label htmlFor={id} className="mb-2 block text-sm font-medium text-zinc-700">
         {label}
       </label>
       {input}
       {error && (
-        <span className="mt-1 block text-sm text-red-400">{error}</span>
+        <span className="mt-2 block text-xs text-red-500">{error}</span>
       )}
     </div>
   );
@@ -384,12 +297,12 @@ function InfoRow({
 }) {
   const Wrap = href ? "a" : "div";
   return (
-    <div className="mb-5 flex items-center">
-      <div className="mr-4 flex h-12 w-12 items-center justify-center rounded-full bg-yellow-500/10 ring-1 ring-yellow-500/20">
-        <span className="text-yellow-400">{icon}</span>
+    <div className="mb-8 flex items-start">
+      <div className="mr-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white border border-zinc-200 text-zinc-900">
+        {icon}
       </div>
       <div>
-        <h4 className="font-semibold">{title}</h4>
+        <h4 className="mb-1 text-sm font-semibold uppercase tracking-widest text-zinc-400">{title}</h4>
         <Wrap
           {...(href
             ? {
@@ -398,9 +311,9 @@ function InfoRow({
                 rel: "noopener noreferrer",
               }
             : {})}
-          className={`${
-            href ? "hover:text-yellow-300" : ""
-          } text-zinc-400 transition-colors`}
+          className={`text-base font-light ${
+            href ? "text-zinc-700 hover:text-black" : "text-zinc-700"
+          } transition-colors`}
         >
           {value}
         </Wrap>
@@ -424,9 +337,8 @@ function Social({
       aria-label={label}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900/60 text-zinc-300 ring-1 ring-inset ring-zinc-800 transition-colors hover:text-yellow-300"
+      className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-400 transition-all hover:border-zinc-400 hover:bg-zinc-50 hover:text-black"
     >
-      <span className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-yellow-500/0 blur-lg transition-opacity group-hover:opacity-40" />
       {children}
     </a>
   );

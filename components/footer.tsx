@@ -1,61 +1,49 @@
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+import Container from "@/components/ui/container";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative overflow-hidden bg-zinc-950 text-zinc-300">
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-950/30 to-transparent"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-[0.04] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E\")",
-        }}
-      />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-3">
+    <footer className="border-t border-white/10 bg-black">
+      <Container className="py-16">
+        <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
           <div>
-            <div className="font-extrabold text-2xl mb-4 tracking-tight">
-              <span className="text-amber-300">Rahul</span>
-              <span className="text-zinc-100">.dev</span>
+            <div className="mb-6 font-display text-2xl font-bold tracking-tight">
+              <span className="text-white">Rahul</span>
+              <span className="text-zinc-500">.</span>
             </div>
-            <p className="text-zinc-400 mb-6 max-w-sm leading-relaxed">
+            <p className="mb-8 max-w-sm text-base font-light leading-relaxed text-zinc-400">
               Full Stack Developer passionate about crafting modern, scalable
-              web applications that make an impact.
+              web applications that make an impact. Building with purpose.
             </p>
-            <div className="flex space-x-3">
+            <div className="flex space-x-4">
               <SocialLink href="https://github.com/Rahularya01" label="GitHub">
-                <Github size={18} />
+                <Github size={18} strokeWidth={1.5} />
               </SocialLink>
               <SocialLink
                 href="https://linkedin.com/in/rahul-arya-0993841b7"
                 label="LinkedIn"
               >
-                <Linkedin size={18} />
+                <Linkedin size={18} strokeWidth={1.5} />
               </SocialLink>
               <SocialLink href="mailto:aryarahul819@gmail.com" label="Email">
-                <Mail size={18} />
+                <Mail size={18} strokeWidth={1.5} />
               </SocialLink>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold text-lg mb-5 text-zinc-100">
+            <h3 className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-500">
               Quick Links
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {["Home", "About", "Experience", "Projects", "Contact"].map(
                 (link) => (
                   <li key={link}>
                     <a
                       href={`#${link.toLowerCase()}`}
-                      className="text-zinc-400 transition-colors duration-200 hover:text-sky-200"
+                      className="text-base font-light text-zinc-400 transition-colors hover:text-white"
                     >
                       {link}
                     </a>
@@ -66,32 +54,31 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-5 text-lg font-semibold text-zinc-100">Services</h3>
-            <ul className="space-y-2 text-zinc-400">
+            <h3 className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-500">Services</h3>
+            <ul className="space-y-4 text-base font-light text-zinc-400">
               {[
                 "Web Development",
                 "Mobile Development",
-                "UI/UX Design",
-                "API Development",
+                "UI/UX Implementation",
+                "API Architecture",
                 "DevOps & Deployment",
                 "Technical Consulting",
               ].map((service) => (
-                <li key={service}>{service}</li>
+                <li key={service} className="transition-colors hover:text-white cursor-default">{service}</li>
               ))}
             </ul>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 md:flex-row">
-          <p className="text-sm text-zinc-500">
-            © {currentYear} Rahul. All rights reserved.
+        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 md:flex-row">
+          <p className="text-sm font-light text-zinc-500">
+            &copy; {currentYear} Rahul. All rights reserved.
           </p>
-          <p className="text-sm text-zinc-500 flex items-center">
-            Made with <Heart size={14} className="mx-1 text-amber-300" /> and
-            lots of coffee
+          <p className="text-sm font-light text-zinc-500">
+            Crafted with precision & purpose
           </p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }
@@ -111,7 +98,7 @@ function SocialLink({
       aria-label={label}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-700 bg-slate-900/60 text-zinc-400 transition-colors hover:border-sky-300/60 hover:text-sky-200"
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all hover:border-white/30 hover:bg-white/5 hover:text-white"
     >
       {children}
     </a>
