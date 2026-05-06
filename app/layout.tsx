@@ -7,6 +7,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+// test
+
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
@@ -29,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className="dark">
+    <html lang="en" className="dark">
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} antialiased bg-zinc-950 text-zinc-50 font-sans selection:bg-white/20`}
       >
