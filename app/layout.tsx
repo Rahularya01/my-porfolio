@@ -7,8 +7,6 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-// test
-
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
