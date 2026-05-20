@@ -5,11 +5,11 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/10 bg-black">
+    <footer className="border-t border-white/[0.06] bg-transparent">
       <Container className="py-16">
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr]">
           <div>
-            <div className="mb-6 font-display text-2xl font-bold tracking-tight">
+            <div className="mb-6 font-display text-2xl font-black tracking-tight">
               <span className="text-white">Rahul</span>
               <span className="text-zinc-500">.</span>
             </div>
@@ -70,7 +70,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 md:flex-row">
+        <div className="mt-16 flex flex-col items-center justify-between gap-6 border-t border-white/[0.06] pt-8 md:flex-row">
           <p className="text-sm font-light text-zinc-500">
             &copy; {currentYear} Rahul. All rights reserved.
           </p>
@@ -98,7 +98,7 @@ function SocialLink({
       aria-label={label}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-all hover:border-white/30 hover:bg-white/5 hover:text-white"
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] text-zinc-400 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
     >
       {children}
     </a>

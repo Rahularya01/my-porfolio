@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
 import Container from "@/components/ui/container";
 
 const navItems = [
@@ -48,13 +47,10 @@ export default function Navbar() {
   };
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+    <nav
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-black/70 backdrop-blur-xl border-b border-white/10 py-2"
+          ? "bg-[#030303]/75 backdrop-blur-2xl border-b border-white/[0.06] py-2"
           : "bg-transparent py-4"
       }`}
     >
@@ -65,12 +61,12 @@ export default function Navbar() {
             onClick={() => scrollToSection("#home")}
             aria-label="Go to top"
           >
-            <span className="font-display text-2xl font-bold tracking-tight text-white">
-              Rahul<span className="text-zinc-500">.</span>
+            <span className="font-display text-2xl font-black tracking-tight text-white">
+              Rahul<span className="text-zinc-500 transition-colors group-hover:text-white">.</span>
             </span>
           </button>
 
-          <div className="hidden items-center gap-1 md:flex rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur-md">
+          <div className="hidden items-center gap-1 md:flex rounded-full border border-white/[0.08] bg-white/[0.02] p-1 backdrop-blur-xl shadow-inner">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
               return (
@@ -80,11 +76,7 @@ export default function Navbar() {
                   className="relative rounded-full px-4 py-1.5 text-sm font-medium transition-colors"
                 >
                   {isActive && (
-                    <motion.div
-                      layoutId="active-pill"
-                      className="absolute inset-0 rounded-full bg-white"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
+                    <div className="absolute inset-0 rounded-full bg-white shadow-[0_4px_20px_rgba(255,255,255,0.2)]" />
                   )}
                   <span className={`relative z-10 ${isActive ? "text-black" : "text-zinc-400 hover:text-white"}`}>
                     {item.label}
@@ -96,14 +88,14 @@ export default function Navbar() {
 
           <button
             onClick={() => scrollToSection("#contact")}
-            className="hidden rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition-all hover:bg-zinc-200 md:inline-block hover:scale-105 active:scale-95"
+            className="hidden rounded-full bg-white px-5 py-2 text-sm font-medium text-black transition-all hover:bg-zinc-200 md:inline-block hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
           >
             Let&apos;s Talk
           </button>
 
           <button
             onClick={() => setIsOpen((state) => !state)}
-            className="rounded-full border border-white/10 bg-white/5 p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-white md:hidden"
+            className="rounded-full border border-white/[0.08] bg-white/[0.02] p-2 text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white md:hidden"
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -111,47 +103,34 @@ export default function Navbar() {
         </div>
       </Container>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="border-b border-white/10 bg-black/95 backdrop-blur-xl px-4 pb-6 pt-2 md:hidden overflow-hidden"
-          >
-            <div className="flex flex-col gap-2">
-              {navItems.map((item, i) => {
-                const isActive = activeSection === item.href.slice(1);
-                return (
-                  <motion.button
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    key={item.href}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`block w-full rounded-xl px-4 py-3 text-left text-lg transition-colors ${
-                      isActive
-                        ? "bg-white text-black font-medium"
-                        : "text-zinc-400 hover:bg-white/5 hover:text-white"
-                    }`}
-                  >
-                    {item.label}
-                  </motion.button>
-                );
-              })}
-              <motion.button
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: navItems.length * 0.1 }}
-                onClick={() => scrollToSection("#contact")}
-                className="mt-4 w-full rounded-xl bg-white px-4 py-3 text-lg font-medium text-black"
-              >
-                Let&apos;s Talk
-              </motion.button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+      {isOpen && (
+        <div className="border-b border-white/[0.06] bg-[#030303]/90 backdrop-blur-2xl px-4 pb-6 pt-2 md:hidden">
+          <div className="flex flex-col gap-2">
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.slice(1);
+              return (
+                <button
+                  key={item.href}
+                  onClick={() => scrollToSection(item.href)}
+                  className={`block w-full rounded-xl px-4 py-3 text-left text-lg transition-colors ${
+                    isActive
+                      ? "bg-white text-black font-medium"
+                      : "text-zinc-400 hover:bg-white/[0.03] hover:text-white"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => scrollToSection("#contact")}
+              className="mt-4 w-full rounded-xl bg-white px-4 py-3 text-lg font-medium text-black shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
+            >
+              Let&apos;s Talk
+            </button>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 }

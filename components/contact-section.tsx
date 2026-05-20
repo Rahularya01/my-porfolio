@@ -5,7 +5,6 @@ import { Mail, Phone, MapPin, Send, Github, Linkedin, CheckCircle, AlertCircle }
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
 import Container from "@/components/ui/container";
 
 const contactSchema = z.object({
@@ -65,34 +64,24 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="bg-white py-32 selection:bg-black/10 selection:text-black">
+    <section id="contact" className="relative py-32 overflow-hidden selection:bg-white/20">
+      {/* Background glow */}
+      <div className="absolute bottom-[20%] left-[-10%] w-[35vw] h-[35vw] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.03)_0%,transparent_70%)] blur-[90px] pointer-events-none" />
+
       <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-20 text-center"
-        >
-          <h2 className="mb-6 font-display text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl">
+        <div className="mb-20 text-center">
+          <h2 className="mb-6 font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
             Let&apos;s Work Together
           </h2>
-          <p className="mx-auto max-w-2xl text-lg md:text-xl font-light text-zinc-500">
-            Have a project or idea? I&apos;m open to new opportunities, collaborations,
-            or a quick tech chat.
+          <p className="mx-auto max-w-2xl text-lg md:text-xl font-light text-zinc-400">
+            Have a project or idea? I&apos;m open to new opportunities, collaborations, or a quick tech chat.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="rounded-[2rem] border border-zinc-200 bg-zinc-50 p-8 sm:p-10"
-          >
-            <h3 className="mb-6 font-display text-2xl font-medium text-zinc-900">Get in Touch</h3>
-            <p className="mb-10 text-base font-light leading-relaxed text-zinc-500">
+          <div className="glass-card rounded-[2rem] p-8 sm:p-10">
+            <h3 className="mb-6 font-display text-2xl font-bold text-white">Get in Touch</h3>
+            <p className="mb-10 text-sm font-light leading-relaxed text-zinc-400">
               Whether it&apos;s a product build or joining your team, I bring 5+
               years of full-stack experience. Let&apos;s ship something great.
             </p>
@@ -115,8 +104,8 @@ export default function ContactSection() {
               value="Based in India — Available Worldwide"
             />
 
-            <div className="mt-12 pt-8 border-t border-zinc-200">
-              <h4 className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-400">Connect Online</h4>
+            <div className="mt-12 pt-8 border-t border-white/5">
+              <h4 className="mb-6 text-xs font-semibold uppercase tracking-widest text-zinc-500">Connect Online</h4>
               <div className="flex gap-4">
                 <Social href="https://github.com/Rahularya01" label="GitHub">
                   <Github size={20} strokeWidth={1.5} />
@@ -129,15 +118,9 @@ export default function ContactSection() {
                 </Social>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="rounded-[2rem] border border-zinc-200 bg-white p-8 sm:p-10"
-          >
+          <div className="glass-card rounded-[2rem] p-8 sm:p-10">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <input
                 type="text"
@@ -217,7 +200,7 @@ export default function ContactSection() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-zinc-900 px-8 py-4 text-base font-medium text-white transition-all hover:bg-black disabled:cursor-not-allowed disabled:opacity-70 hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-white px-8 py-4 text-base font-semibold text-black transition-all hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-70 hover:scale-[1.02] active:scale-[0.98] shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
               >
                 <Send size={18} />
                 {isSubmitting ? "Sending..." : "Send Message"}
@@ -225,13 +208,11 @@ export default function ContactSection() {
 
               <div aria-live="polite" aria-atomic="true">
                 {submitStatus.type && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
+                  <div
                     className={`mt-4 flex items-center gap-3 rounded-xl border p-4 text-sm ${
                       submitStatus.type === "success"
-                        ? "border-emerald-500/20 bg-emerald-50 text-emerald-700"
-                        : "border-red-500/20 bg-red-50 text-red-700"
+                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+                        : "border-red-500/20 bg-red-500/10 text-red-400"
                     }`}
                   >
                     {submitStatus.type === "success" ? (
@@ -239,12 +220,12 @@ export default function ContactSection() {
                     ) : (
                       <AlertCircle size={18} />
                     )}
-                    <span className="font-medium">{submitStatus.message}</span>
-                  </motion.div>
+                    <span className="font-semibold">{submitStatus.message}</span>
+                  </div>
                 )}
               </div>
             </form>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>
@@ -253,9 +234,9 @@ export default function ContactSection() {
 
 function inputClass({ textarea = false }: { textarea?: boolean } = {}) {
   return [
-    "w-full rounded-xl border bg-zinc-50 text-zinc-900 placeholder:text-zinc-400",
-    "border-zinc-200 focus:border-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-400",
-    "transition-all px-5 py-3.5 text-base font-light",
+    "w-full rounded-xl border border-white/[0.08] bg-white/[0.01] text-white placeholder:text-zinc-500",
+    "focus:border-white/20 focus:outline-none focus:ring-1 focus:ring-white/20",
+    "transition-all px-5 py-3.5 text-sm font-light",
     textarea ? "resize-none" : "",
   ].join(" ");
 }
@@ -273,12 +254,12 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-sm font-medium text-zinc-700">
+      <label htmlFor={id} className="mb-2 block text-sm font-medium text-zinc-300">
         {label}
       </label>
       {input}
       {error && (
-        <span className="mt-2 block text-xs text-red-500">{error}</span>
+        <span className="mt-2 block text-xs text-red-400">{error}</span>
       )}
     </div>
   );
@@ -298,11 +279,11 @@ function InfoRow({
   const Wrap = href ? "a" : "div";
   return (
     <div className="mb-8 flex items-start">
-      <div className="mr-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white border border-zinc-200 text-zinc-900">
+      <div className="mr-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5 border border-white/10 text-white shrink-0">
         {icon}
       </div>
       <div>
-        <h4 className="mb-1 text-sm font-semibold uppercase tracking-widest text-zinc-400">{title}</h4>
+        <h4 className="mb-1 text-sm font-semibold uppercase tracking-widest text-zinc-500">{title}</h4>
         <Wrap
           {...(href
             ? {
@@ -312,7 +293,7 @@ function InfoRow({
               }
             : {})}
           className={`text-base font-light ${
-            href ? "text-zinc-700 hover:text-black" : "text-zinc-700"
+            href ? "text-zinc-300 hover:text-white" : "text-zinc-300"
           } transition-colors`}
         >
           {value}
@@ -337,7 +318,7 @@ function Social({
       aria-label={label}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-400 transition-all hover:border-zinc-400 hover:bg-zinc-50 hover:text-black"
+      className="flex h-12 w-12 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.02] text-zinc-400 transition-all hover:border-white/20 hover:bg-white/[0.06] hover:text-white"
     >
       {children}
     </a>

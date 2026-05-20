@@ -1,7 +1,6 @@
 "use client";
 
 import { Building2, Calendar, MapPin } from "lucide-react";
-import { motion, Variants } from "framer-motion";
 import Container from "@/components/ui/container";
 
 const experiences = [
@@ -68,74 +67,38 @@ const experiences = [
 ];
 
 export default function ExperienceSection() {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-  };
-
   return (
-    <section id="experience" className="relative bg-zinc-950 py-32 overflow-hidden selection:bg-white/20">
+    <section id="experience" className="relative py-32 overflow-hidden selection:bg-white/20">
       {/* Background patterns */}
-      <div className="absolute inset-0 z-0 bg-grid-white opacity-40" />
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.08),transparent_70%)]" />
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_80%_70%,rgba(255,255,255,0.08),transparent_70%)]" />
+      <div className="absolute inset-0 z-0 bg-grid-white opacity-20" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_20%_30%,rgba(168,85,247,0.03),transparent_70%)]" />
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_80%_70%,rgba(16,185,129,0.03),transparent_70%)]" />
       
       <Container className="relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-20 text-center"
-        >
-          <h2 className="mb-6 font-display text-4xl font-medium tracking-tight text-white sm:text-5xl">
+        <div className="mb-20 text-center">
+          <h2 className="mb-6 font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
             Work Experience
           </h2>
           <p className="mx-auto max-w-2xl text-lg md:text-xl font-light text-zinc-400">
-            A journey through my professional growth and the impact I&apos;ve
-            made at various organizations.
+            A journey through my professional growth and the impact I&apos;ve made at various organizations.
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative">
-          <div className="absolute left-6 top-0 h-full w-px bg-white/10 md:left-1/2 md:-translate-x-px" />
+          <div className="absolute left-6 top-0 h-full w-px bg-white/[0.08] md:left-1/2 md:-translate-x-px" />
 
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-16"
-          >
+          <div className="space-y-16">
             {experiences.map((exp, i) => {
               const flip = i % 2 !== 0;
               return (
-                <motion.div
+                <div
                   key={exp.company + i}
-                  variants={itemVariants}
                   className={`relative flex items-stretch ${
                     flip ? "md:flex-row-reverse" : "md:flex-row"
                   }`}
                 >
                   <div className="absolute left-6 top-6 md:left-1/2 md:-translate-x-1/2 z-10">
-                    <span className="block h-4 w-4 rounded-full border-[3px] border-black bg-white shadow-[0_0_0_4px_rgba(255,255,255,0.1)]" />
+                    <span className="block h-4 w-4 rounded-full border-[3px] border-[#030303] bg-white shadow-[0_0_15px_rgba(255,255,255,0.4)]" />
                   </div>
 
                   <div
@@ -143,14 +106,14 @@ export default function ExperienceSection() {
                       flip ? "md:pl-16" : "md:pr-16 md:text-right"
                     }`}
                   >
-                    <div className="rounded-[2rem] border border-white/10 bg-black p-8 sm:p-10 transition-all hover:border-white/30 hover:bg-zinc-900/40">
+                    <div className="glass-card rounded-[2rem] p-8 sm:p-10">
                       <div
                         className={`flex flex-col gap-4 mb-6 ${
                           flip ? "" : "md:items-end"
                         }`}
                       >
                         <div className={flip ? "" : "md:text-right"}>
-                          <h3 className="mb-2 font-display text-2xl font-medium text-white">
+                          <h3 className="mb-2 font-display text-2xl font-bold text-white">
                             {exp.position}
                           </h3>
                           <div className={`mb-4 flex items-center font-medium text-zinc-300 ${flip ? "" : "md:justify-end"}`}>
@@ -174,19 +137,19 @@ export default function ExperienceSection() {
                         {exp.description.map((d, idx) => (
                           <li
                             key={idx}
-                            className="flex items-start text-base font-light leading-relaxed text-zinc-400"
+                            className="flex items-start text-sm font-light leading-relaxed text-zinc-400"
                           >
-                            <span className="mt-2.5 mr-4 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-white/30" />
+                            <span className="mt-2 mr-4 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-white/20" />
                             {d}
                           </li>
                         ))}
                       </ul>
 
-                      <div className={`flex flex-wrap gap-2 ${flip ? "" : "md:justify-end"}`}>
+                      <div className={`flex flex-wrap gap-1.5 ${flip ? "" : "md:justify-end"}`}>
                         {exp.technologies.map((t) => (
                           <span
                             key={t}
-                            className="rounded-full border border-white/5 bg-white/5 px-3 py-1.5 text-xs font-medium text-zinc-300"
+                            className="rounded-full border border-white/[0.05] bg-white/5 px-3 py-1 text-xs font-mono text-zinc-350"
                           >
                             {t}
                           </span>
@@ -194,10 +157,10 @@ export default function ExperienceSection() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

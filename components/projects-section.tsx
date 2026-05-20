@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { ExternalLink, Github } from "lucide-react";
-import { motion } from "framer-motion";
 import Container from "@/components/ui/container";
 
 const projects = [
@@ -78,77 +77,66 @@ export default function ProjectsSection() {
   );
 
   return (
-    <section id="projects" className="bg-white py-32 selection:bg-black/10 selection:text-black">
+    <section id="projects" className="relative py-32 overflow-hidden selection:bg-white/20">
+      {/* Dynamic Background Light */}
+      <div className="absolute bottom-[10%] right-[-10%] w-[35vw] h-[35vw] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.03)_0%,transparent_70%)] blur-[90px] pointer-events-none" />
+
       <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-16 text-center"
-        >
-          <h2 className="mb-4 font-display text-4xl font-medium tracking-tight text-zinc-900 sm:text-5xl">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
             Featured Projects
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-zinc-500">
-            Modern, scalable builds focused on performance, UX, and
-            maintainability.
+          <p className="mx-auto max-w-2xl text-lg text-zinc-400 font-light">
+            Modern, scalable builds focused on performance, UX, and maintainability.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="mx-auto mb-16 flex flex-wrap items-center justify-center gap-2"
-        >
+        <div className="mx-auto mb-16 flex flex-wrap items-center justify-center gap-2">
           {categories.map((c) => (
             <button
               key={c}
               onClick={() => setActive(c)}
-              className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
+              className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
                 active === c
-                  ? "bg-zinc-900 text-white"
-                  : "bg-zinc-100 text-zinc-500 hover:bg-zinc-200 hover:text-zinc-900"
+                  ? "bg-white text-black shadow-[0_4px_15px_rgba(255,255,255,0.2)]"
+                  : "bg-white/5 border border-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
               }`}
             >
               {c}
             </button>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div
-          layout
-          className="grid gap-6 md:grid-cols-2"
-        >
-          {filtered.map((p, index) => (
-            <ProjectCard key={p.title} p={p} index={index} />
-          ))}
-        </motion.div>
+        <div className="grid gap-6 md:grid-cols-2">
+          {filtered.map((p, index) => {
+            // Create a staggered layout on medium screens and larger
+            const isWide = index % 3 === 0 && active === "All";
+            return (
+              <ProjectCard
+                key={p.title}
+                p={p}
+                className={isWide ? "md:col-span-2" : ""}
+              />
+            );
+          })}
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-24 rounded-[2rem] border border-zinc-200 bg-zinc-50 p-10 text-center sm:p-16"
-        >
-          <h3 className="mb-4 font-display text-3xl font-medium text-zinc-900 sm:text-4xl">
+        <div className="mt-24 glass-card rounded-[2.5rem] p-10 text-center sm:p-16">
+          <h3 className="mb-4 font-display text-3xl font-bold text-white sm:text-4xl">
             Got an ambitious idea?
           </h3>
-          <p className="mb-8 text-lg text-zinc-500">
+          <p className="mb-8 text-lg text-zinc-400 font-light">
             Let&apos;s build something fast, beautiful, and reliable.
           </p>
           <button
             onClick={() =>
               document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })
             }
-            className="rounded-full bg-zinc-900 px-8 py-4 text-sm font-medium text-white transition-all hover:bg-black hover:scale-105 active:scale-95"
+            className="rounded-full bg-white px-8 py-4 text-sm font-semibold text-black transition-all hover:bg-zinc-100 hover:scale-105 active:scale-95 shadow-[0_4px_20px_rgba(255,255,255,0.15)]"
           >
             Get In Touch
           </button>
-        </motion.div>
+        </div>
       </Container>
     </section>
   );
@@ -156,7 +144,7 @@ export default function ProjectsSection() {
 
 function ProjectCard({
   p,
-  index,
+  className = "",
 }: {
   p: {
     title: string;
@@ -167,86 +155,83 @@ function ProjectCard({
     githubUrl?: string;
     category: string;
   };
-  index: number;
+  className?: string;
 }) {
   const open = (url?: string) => url && window.open(url, "_blank");
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="group relative overflow-hidden rounded-[2rem] border border-zinc-200 bg-white transition-all hover:border-zinc-300 hover:shadow-xl hover:shadow-zinc-200/50"
+    <div
+      className={`group relative overflow-hidden rounded-[2rem] glass-card glass-card-hover flex flex-col justify-between ${className}`}
     >
-      <div className="border-b border-zinc-100 bg-zinc-50 p-8 transition-colors group-hover:bg-zinc-100/50">
-        <div className="mb-4 flex items-center justify-between">
-          <span className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600">
+      <div>
+        <div className="border-b border-white/[0.05] bg-white/[0.01] p-8 flex items-center justify-between">
+          <h3 className="font-display text-2xl font-bold text-white">{p.title}</h3>
+          <span className="rounded-full border border-white/[0.08] bg-white/5 px-3 py-1 text-xs font-semibold text-zinc-400">
             {p.category}
           </span>
         </div>
-        <h3 className="font-display text-2xl font-medium text-zinc-900">{p.title}</h3>
-      </div>
 
-      <div className="p-8">
-        <p className="mb-8 text-base leading-relaxed text-zinc-500">
-          {p.description}
-        </p>
+        <div className="p-8">
+          <p className="mb-8 text-sm leading-relaxed text-zinc-400 font-light">
+            {p.description}
+          </p>
 
-        <div className="mb-8">
-          <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-            Key Features
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {p.features.map((f) => (
-              <span
-                key={f}
-                className="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600"
-              >
-                {f}
-              </span>
-            ))}
+          <div className="grid gap-6 sm:grid-cols-2">
+            <div>
+              <h4 className="mb-3 text-[10px] uppercase tracking-widest text-zinc-500 font-bold">
+                Key Features
+              </h4>
+              <div className="flex flex-wrap gap-1.5">
+                {p.features.map((f) => (
+                  <span
+                    key={f}
+                    className="rounded-full bg-white/5 border border-white/[0.05] px-3 py-1 text-[11px] text-zinc-300 font-mono"
+                  >
+                    {f}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="mb-3 text-[10px] uppercase tracking-widest text-zinc-500 font-bold">
+                Technologies
+              </h4>
+              <div className="flex flex-wrap gap-1.5">
+                {p.technologies.map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-white/[0.05] bg-white/[0.02] px-3 py-1 text-[11px] text-zinc-300 font-mono"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="mb-8">
-          <h4 className="mb-3 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-            Technologies
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {p.technologies.map((t) => (
-              <span
-                key={t}
-                className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-600"
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-zinc-100">
-          {p.liveUrl && (
-            <button
-              onClick={() => open(p.liveUrl)}
-              className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-xs font-medium text-white transition-all hover:bg-black"
-            >
-              <ExternalLink size={16} />
-              Visit Live
-            </button>
-          )}
-          {p.githubUrl && (
-            <button
-              onClick={() => open(p.githubUrl)}
-              className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-transparent px-5 py-2.5 text-xs font-medium text-zinc-900 transition-all hover:bg-zinc-50"
-            >
-              <Github size={16} />
-              Source Code
-            </button>
-          )}
-        </div>
       </div>
-    </motion.div>
+
+      <div className="p-8 pt-4 flex flex-wrap items-center gap-3 border-t border-white/[0.05]">
+        {p.liveUrl && (
+          <button
+            onClick={() => open(p.liveUrl)}
+            className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-semibold text-black transition-all hover:bg-zinc-100 hover:scale-105 active:scale-95 shadow-[0_4px_15px_rgba(255,255,255,0.15)]"
+          >
+            <ExternalLink size={14} />
+            Visit Live
+          </button>
+        )}
+        {p.githubUrl && (
+          <button
+            onClick={() => open(p.githubUrl)}
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-transparent px-5 py-2.5 text-xs font-medium text-zinc-300 transition-all hover:bg-white/5 hover:border-white/20"
+          >
+            <Github size={14} />
+            Source Code
+          </button>
+        )}
+      </div>
+    </div>
   );
 }
